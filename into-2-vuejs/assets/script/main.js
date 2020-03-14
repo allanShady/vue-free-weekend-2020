@@ -13,6 +13,7 @@ let app = new Vue({
             {id: 1, color: 'green'},
             {id: 2, color: 'blue'},
             {id: 3, color: 'red'}
-        ]
+        ],
+        sizes:['S', 'M', 'L', 'XL', 'XXL']
     }
 });
