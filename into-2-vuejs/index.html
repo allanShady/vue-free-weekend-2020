@@ -24,16 +24,24 @@
                 <ul>
                     <li v-for="size in sizes">{{size}}</li>
                 </ul>
-                <div v-for="variant in variants" :key="variant.id">
-                    <p  @mouseover="updateProduct(variant.image)">
-                        {{variant.color}}
-                    </p>
+                <div class="color-box" 
+                    v-for="variant in variants" 
+                    :key="variant.id"
+                    :style="{ backgroundColor: variant.color}"
+                    @mouseover="updateProduct(variant.image)"
+                >
                 </div>
                 
                 <div class="cart">
                     <p>Cart({{cart}})</p>
-                    <button @click="addToCart">Add to cart</button>
-                    <button v-show="cart > 0" @click="removeFromCart">Remove one</button>
+                    <button @click="addToCart" 
+                    :disabled="!inStock" 
+                    :class="{ disabledButton: !inStock}"
+                    >
+                    Add to cart
+                </button>
+
+                <button v-show="cart > 0" @click="removeFromCart">Remove one</button>
                 </div>
                 
                 <p v-if="inStock">In Stock</p>
@@ -43,6 +51,6 @@
         </div>
               
     </div>
-<script src="assets/script/main.js"> </script>
+<script src="assets/script/main.js" defer> </script>
 </body>
 </html>
