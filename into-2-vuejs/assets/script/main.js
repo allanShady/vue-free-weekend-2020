@@ -3,6 +3,7 @@ console.log('main.js file loaded into HTML');
 let app = new Vue({
     el: '#app',
     data: {
+        cart: 0,
         product: 'Socks - 1',
         image: 'assets/img/vmSocks-green-onWhite.jpg',
         altText: 'A pair of sucks',
@@ -10,10 +11,25 @@ let app = new Vue({
         inStock: 0,
         details: ['80% cottons', '20% polyester', 'Genders-neutral'],
         variants: [
-            {id: 1, color: 'green'},
-            {id: 2, color: 'blue'},
-            {id: 3, color: 'red'}
+            {id: 1, color: 'green', image: 'assets/img/vmSocks-green-onWhite.jpg'},
+            {id: 2, color: 'blue', image: 'assets/img/vmSocks-blue-onWhite.jpg'},
         ],
         sizes:['S', 'M', 'L', 'XL', 'XXL']
+    },
+
+    methods: {
+        addToCart() {
+            ++this.cart;
+        },
+
+        removeFromCart() {
+            
+            if(this.cart >= 0)
+                --this.cart;
+        },
+
+        updateProduct(variantImage) {
+            this.image = variantImage
+        }
     }
 });
