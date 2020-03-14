@@ -1,3 +1,53 @@
+Vue.component('product-review-form', {
+    template: `<form class="review-form" @submit.prevent="OnSubmit">
+    <p>
+        <label for="name">Name:</label>
+        <input id="name" v-model="name">
+    </p>
+
+    <p>
+        <label for="review">Review:</label>
+        <textarea id="review" v-model="review"></textarea>
+    </p>
+    
+    <p>
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model.number="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>4</option>
+        </select>
+    </p>
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>`,
+
+data() {
+    return {
+        name: null,
+        rating: null,
+        review: null,
+    }
+},
+
+methods: {
+    OnSubmit() {
+        let productReview = {
+            name: this.name,
+            review: this.review,
+            rating: this.rating
+        }
+        this.$emit('review-submitted', productReview)
+        this.name = null,
+        this.review = null,
+        this.rating = null
+    },
+}
+});
+
 Vue.component('product', {
     template: `<div class="product">
     <div class="product-image">
@@ -33,11 +83,24 @@ Vue.component('product', {
         </button>
 
         <button :disabled="!inStock" 
-        :class="{ disabledButton: !inStock}" @click="removeFromCart">Remove one</button>
-        
-        
+        :class="{ disabledButton: !inStock}" @click="removeFromCart">Remove one</button>        
         <a :href="productInfo"> Visit our oficial site</a>
     </div>
+
+    <product-review-form @review-submitted="addReview"></product-review-form> 
+    
+    <div>
+    <h2>Reviews</h2>
+    <p v-if="!reviews.length">There are no reviews yet.</p>
+    <ul>
+      <li v-for="review in reviews">
+      <p>{{ review.name }}</p>
+      <p>Rating: {{ review.rating }}</p>
+      <p>{{ review.review }}</p>
+      </li>
+    </ul>
+   </div>
+ 
 </div>`,
 props: {
     premium: {
@@ -60,7 +123,8 @@ data() {
             {id: 1, color: 'green', image: 'assets/img/vmSocks-green-onWhite.jpg', quantity: 0},
             {id: 2, color: 'blue', image: 'assets/img/vmSocks-blue-onWhite.jpg', quantity: 12},
         ],
-        sizes:['S', 'M', 'L', 'XL', 'XXL']
+        sizes:['S', 'M', 'L', 'XL', 'XXL'],
+        reviews: []
     }
 },
 
@@ -75,7 +139,13 @@ methods: {
 
     updateProduct(index) {
         this.selectedVariantIndex = index;
+    },
+
+    addReview(review){
+        console.log('emited');
+        if(review)  this.reviews.push(review);
     }
+
 },
 
 computed: {
@@ -93,7 +163,7 @@ computed: {
 
     shipping() {
         return this.premium ? 'Free' : 4.32
-    }
+    },    
 }
 });
 
