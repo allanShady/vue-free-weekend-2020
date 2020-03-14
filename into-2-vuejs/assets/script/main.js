@@ -6,6 +6,7 @@ let app = new Vue({
         product: 'Socks - 1',
         image: 'assets/img/vmSocks-green-onWhite.jpg',
         altText: 'A pair of sucks',
-        productInfo: 'https://brave-hugle-f2518f.netlify.com'
+        productInfo: 'https://brave-hugle-f2518f.netlify.com',
+        inStock: 0
     }
 });
