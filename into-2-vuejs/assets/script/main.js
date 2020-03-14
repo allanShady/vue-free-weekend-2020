@@ -1,8 +1,56 @@
-console.log('main.js file loaded into HTML');
+Vue.component('product', {
+    template: `<div class="product">
+    <div class="product-image">
+        <img :src="image" :alt="altText">
+    </div>
 
-let app = new Vue({
-    el: '#app',
-    data: {
+    <div class="product-info">
+        <h1> {{ title }} </h1>
+        <p v-if="inStock">In Stock</p>
+        <p v-else :class="{ }">Out of Stock</p>
+        <p>Shipping: {{shipping}}</p>
+        <ul>
+            <li v-for="detail in details">{{detail}}</li>
+        </ul>
+
+        <label for="size">Select the size</label>
+        <ul>
+            <li v-for="size in sizes">{{size}}</li>
+        </ul>
+        <div class="color-box" 
+            v-for="(variant, index) in variants" 
+            :key="variant.id"
+            :style="{ backgroundColor: variant.color}"
+            @mouseover="updateProduct(index)"
+        >
+        </div>
+        
+        <div class="cart">
+            <p>Cart({{cart}})</p>
+            <button @click="addToCart" 
+            :disabled="!inStock" 
+            :class="{ disabledButton: !inStock}"
+            >
+            Add to cart
+        </button>
+
+        <button v-show="cart > 0" @click="removeFromCart">Remove one</button>
+        </div>
+        
+        
+        <a :href="productInfo"> Visit our oficial site</a>
+    </div>
+</div>`,
+props: {
+    premium: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
+},
+
+data() {
+    return {
         cart: 0,
         brand: 'Vue mastery',
         product: 'Socks',
@@ -15,35 +63,44 @@ let app = new Vue({
             {id: 2, color: 'blue', image: 'assets/img/vmSocks-blue-onWhite.jpg', quantity: 12},
         ],
         sizes:['S', 'M', 'L', 'XL', 'XXL']
-    },
-
-    methods: {
-        addToCart() {
-            ++this.cart;
-        },
-
-        removeFromCart() {
-            
-            if(this.cart >= 0)
-                --this.cart;
-        },
-
-        updateProduct(index) {
-            this.selectedVariantIndex = index;
-        }
-    },
-
-    computed: {
-        title() {
-            return `${this.brand} ${this.product}`;
-        },
-
-        image() {
-            return this.variants[this.selectedVariantIndex].image;
-        },
-
-        inStock() {
-            return this.variants[this.selectedVariantIndex].quantity
-        }
     }
+},
+
+methods: {
+    addToCart() {
+        ++this.cart;
+    },
+
+    removeFromCart() {
+        
+        if(this.cart >= 0)
+            --this.cart;
+    },
+
+    updateProduct(index) {
+        this.selectedVariantIndex = index;
+    }
+},
+
+computed: {
+    title() {
+        return `${this.brand} ${this.product}`;
+    },
+
+    image() {
+        return this.variants[this.selectedVariantIndex].image;
+    },
+
+    inStock() {
+        return this.variants[this.selectedVariantIndex].quantity
+    },
+
+    shipping() {
+        return this.premium ? 'Free' : 4.32
+    }
+}
+});
+
+let app = new Vue({
+    el: '#app',
 });
