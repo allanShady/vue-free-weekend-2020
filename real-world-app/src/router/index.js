@@ -8,17 +8,18 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/EventList",
-    name: "Event List",
+    name: "event-list",
     component: EventList
   },
   {
-    path: "/EventShow",
-    name: "Event Show",
-    component: EventShow
+    path: "/EventShow/:id",
+    name: "event-show",
+    component: EventShow,
+    props: true
   },
   {
     path: "/CreateEvent",
-    name: "Create Event",
+    name: "event-create",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -28,6 +29,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 });
 
