@@ -11,11 +11,15 @@ const appClient = axios.create({
 })
 
 export default {
-    getEvents(apiResource) {
-        return appClient.get(apiResource);
+    getEvents(apiResource, perPage, page) {
+        return appClient.get(`${apiResource}?_limit=${perPage}&_page=${page}`);
     },
 
     postEvent(apiResource, event) {
         return appClient.post(apiResource, event);
-    }
+    },
+
+    getEvent(apiResource, id) {
+        return appClient.get(`${apiResource}/${id}`);
+    }    
 }
