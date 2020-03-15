@@ -44,6 +44,60 @@
       "date": "2019-02-02T23:27:00.000Z",
       "time": "1:00",
       "attendees": []
+    },
+    {
+      "id": 8621275,
+      "user": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "category": "programing",
+      "organizer": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "title": "The first steps with vue JS",
+      "description": "Do you know vueJS?",
+      "location": "Maputo baixa",
+      "date": "2020-03-17T14:36:00.000Z",
+      "time": "10:00",
+      "attendees": []
+    },
+    {
+      "id": 8320749,
+      "user": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "category": "programing",
+      "organizer": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "title": "Amazing things JS can do",
+      "description": "Do you know that there is a lot of amazing things that js can do?",
+      "location": "Nampula",
+      "date": "2020-03-21T14:45:00.000Z",
+      "time": "17:00",
+      "attendees": []
+    },
+    {
+      "id": 9589951,
+      "user": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "category": "programing",
+      "organizer": {
+        "id": 1,
+        "name": "Alan Camilo"
+      },
+      "title": "This is the last for now ",
+      "description": "I have to take a break",
+      "location": "Chimoio",
+      "date": "2020-03-23T14:51:00.000Z",
+      "time": "10:00",
+      "attendees": []
     }
   ]
 }
