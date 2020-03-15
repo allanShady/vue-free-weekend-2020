@@ -4,6 +4,14 @@
 ```
 yarn install
 ```
+## add dependency for json db file
+```
+yarn global add json-server
+```
+## Serve db.json file used for applicatin data
+```
+json-server --watch db.json
+```
 
 ### Compiles and hot-reloads for development
 ```
