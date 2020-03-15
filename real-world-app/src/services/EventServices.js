@@ -13,5 +13,9 @@ const appClient = axios.create({
 export default {
     getEvents(apiResource) {
         return appClient.get(apiResource);
+    },
+
+    postEvent(apiResource, event) {
+        return appClient.post(apiResource, event);
     }
 }
