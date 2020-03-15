@@ -1,28 +1,99 @@
 <template>
-    <div>
-        <h4>Create an Event, {{user.name}}</h4>
-        <p>This event was created by: {{user.id}}</p>
-
-        <p>{{getEventById(2)}}</p>
-
-        <p>There are {{ catLength }} Categories</p>
-    </div>
+  <div>
+    <h4>Create an Event</h4>
+    <form @submit.prevent="creatEvent">
+      <label>Select a category</label>
+      <select v-model="event.category">
+        <option v-for="cat in categories" :key="cat">{{ cat }}</option>
+      </select>
+      <h3>Name & describe your event</h3>
+      <div class="field">
+        <label>Title</label>
+        <input v-model="event.title" type="text" placeholder="Add an event title" />
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <input v-model="event.description" type="text" placeholder="Add a description" />
+      </div>
+      <h3>Where is your event?</h3>
+      <div class="field">
+        <label>Location</label>
+        <input v-model="event.location" type="text" placeholder="Add a location" />
+      </div>
+      <h3>When is your event?</h3>
+      <div class="field">
+        <label>Date</label>
+        <date-picker v-model="event.date" placeholder="Select a date" />
+      </div>
+      <div class="field">
+        <label>Select a time</label>
+        <select v-model="event.time">
+          <option v-for="time in times" :key="time">{{ time }}</option>
+        </select>
+      </div>
+      <input type="submit" class="button -fill-gradient" value="Submit" />
+    </form>
+  </div>
 </template>
 
 <script>
-import { mapState , mapGetters } from 'vuex';
+import DatePicker from "vuejs-datepicker";
 
 export default {
-    computed: {
-        /*getEventById() {
-            return this.$store.getters.getEventById;    
-        },*/
+  data() {
+    const times = [];
 
-        catLength(){
-            return this.$store.getters.catLength
-        },
-        ...mapGetters(['getEventById']),
-        ...mapState(['user', 'categories'])
+    for (let index = 0; index < 24; index++) {
+      times.push(`${index}:00`);
     }
-}
+
+    return {
+      times,
+      categories: this.$store.state.categories,
+      event: this.creatFreshEventObject()
+    };
+  },
+
+  components: {
+    DatePicker
+  },
+
+  methods: {
+    creatEvent() {
+      this.$store
+        .dispatch("CreateEvent", this.event)
+        .then(() => {
+          this.$router.push({
+            name: "event-show",
+            params: { id: this.event.id }
+          });
+          this.event = this.creatFreshEventObject();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    creatFreshEventObject() {
+      const user = this.$store.state.user;
+      const id = Math.floor(Math.random() * 10000000);
+
+      return {
+        id: id,
+        user: user,
+        category: "",
+        organizer: user,
+        title: "",
+        description: "",
+        location: "",
+        date: "",
+        time: "",
+        attendees: []
+      };
+    }
+  }
+};
 </script>
+
+<style scoped>
+</style>
